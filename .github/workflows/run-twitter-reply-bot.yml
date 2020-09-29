@@ -36,6 +36,6 @@ jobs:
         push-branch: 'master'
         commit-message: 'auto-repo-update'
         force-add: 'true'
-        files: since.txt
+        files: since.txt log.txt
         name: philshem
         email: philshem@pm.me
