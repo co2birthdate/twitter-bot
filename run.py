@@ -36,7 +36,8 @@ def check_mentions(api, since_id):
 		#if not tweet.user.following:
 		#	tweet.user.follow()
 
-		reply = get_dates.main(tweet.text)
+		reply = '@'+tweet.user.screen_name + ' ' + get_dates.main(tweet.text)
+
 		with open('log.txt','a') as fp:
 			#print(tweet.id, tweet.text)
 			fp.write(str(tweet.id)+': '+tweet.text+'\n')
