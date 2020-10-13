@@ -27,8 +27,17 @@ def create_api():
 
 def check_mentions(api, since_id):
 
+	data = None
+	latest = None
+
 	new_since_id = since_id
 	for tweet in tweepy.Cursor(api.mentions_timeline, since_id=since_id).items():
+
+		if data is None:
+			data, latest = get_dates.load_data()
+
+		#tweepy.Cursor(api.mentions_timeline, since_id=since_id).items()
+
 		new_since_id = max(tweet.id, new_since_id)
 		if tweet.in_reply_to_status_id is not None:
 			continue
@@ -36,11 +45,10 @@ def check_mentions(api, since_id):
 		#if not tweet.user.following:
 		#	tweet.user.follow()
 
-		reply = '@'+tweet.user.screen_name + ' ' + get_dates.main(tweet.text)
+		reply = '@'+tweet.user.screen_name + ' ' + get_dates.main(tweet.text, data, latest)
 
-		with open('log.txt','a') as fp:
-			#print(tweet.id, tweet.text)
-			fp.write(str(tweet.id)+': '+tweet.text+'\n')
+		print('LOGGING: '+str(tweet.id))
+
 		try:
 			api.update_status(status=reply,in_reply_to_status_id=tweet.id,)
 		except:

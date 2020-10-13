@@ -10,9 +10,7 @@ from datetime import datetime
 
 #latest = ['now', 'today', 'current', 'actual', 'latest']
 
-def main(text='Today is 1980-01-01 thank you'):
-
-	data, latest = load_data()
+def main(text, data, latest):
 
 	# debugging
 	#text = "Today is 12-01-18 thank you"
@@ -40,27 +38,29 @@ def main(text='Today is 1980-01-01 thank you'):
 		dates_list = sorted(list(set(dates_list)))[::-1]
 
 	# get current value
-	current = round(list(latest.values())[0],1)
-
+	current_date = latest.get('date')
+	current_value = latest.get('ppm')
 
 	reply = []
 	if dates_list is None:
 		reply.append('Here is the most recent atmospheric CO₂ measurement:')
-		reply.append(list(latest.keys())[0]+': '+str(current)+' ppm')
+		reply.append(current_date+': '+str(current_value)+' ppm')
 
 	else:
 		reply.append('Here are your atmospheric CO₂ measurements:')
 
 		for d in dates_list:
 			#print(d)
-			previous = round(data.get(d,None),1)
-			percent_change = round(100.0 * (current - previous) / previous,1)
-			if percent_change > 0:
-				reply.append(d+': '+str(previous)+' ppm (+' + str(percent_change) + '%)' + '📈'*int(percent_change/5) )
-			else:
-				reply.append(d+': '+str(previous)+' ppm (' + str(percent_change) + '%)')
+			previous = next((item for item in data if item['date'] == d), None)
+			previous_value = previous.get('ppm')
 
-		reply.append(list(latest.keys())[0]+': '+str(current)+' ppm (latest)' + '🌡️🔥')
+			percent_change = round(100.0 * (current_value - previous_value) / previous_value,1)
+			if percent_change > 0:
+				reply.append(d+': '+str(previous_value)+' ppm (+' + str(percent_change) + '%)' + '📈'*int(percent_change/5) )
+			else:
+				reply.append(d+': '+str(previous_value)+' ppm (' + str(percent_change) + '%)')
+
+		reply.append(current_date+': '+str(current_value)+' ppm (latest)' + '🌡️🔥')
 
 	reply.append('more info: https://co2birth.date #co2birthdate')
 
@@ -75,7 +75,7 @@ def find_dates(t):
 
 def load_data():
 
-	if True:
+	if False:
 		# get online versions
 		data = requests.get('https://github.com/co2birthdate/dataops/raw/master/output_data/co2.json').json()
 		latest = requests.get('https://github.com/co2birthdate/dataops/raw/master/output_data/latest.json').json()
@@ -91,5 +91,7 @@ def load_data():
 
 
 if __name__ == "__main__":
-	
-	main()
+
+	data, latest = load_data()
+
+	main('Today is 1980-01-01 thank you', data, latest)
