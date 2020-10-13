@@ -75,7 +75,7 @@ def find_dates(t):
 
 def load_data():
 
-	if False:
+	if True:
 		# get online versions
 		data = requests.get('https://github.com/co2birthdate/dataops/raw/master/output_data/co2.json').json()
 		latest = requests.get('https://github.com/co2birthdate/dataops/raw/master/output_data/latest.json').json()
