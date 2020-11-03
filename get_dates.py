@@ -77,7 +77,7 @@ def load_data():
 
 	if True:
 		# get online versions (use this old commit, since the current input data is borked)
-		data = requets.get('https://raw.githubusercontent.com/co2birthdate/dataops/37e471357b893d6a3a55a50a58a297365a437434/output_data/co2.json').json()
+		data = requests.get('https://raw.githubusercontent.com/co2birthdate/dataops/37e471357b893d6a3a55a50a58a297365a437434/output_data/co2.json').json()
 		latest = requests.get('https://raw.githubusercontent.com/co2birthdate/dataops/37e471357b893d6a3a55a50a58a297365a437434/output_data/latest.json').json()
 		#data = requests.get('https://github.com/co2birthdate/dataops/raw/master/output_data/co2.json').json()
 		#latest = requests.get('https://github.com/co2birthdate/dataops/raw/master/output_data/latest.json').json()
