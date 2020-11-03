@@ -75,10 +75,12 @@ def find_dates(t):
 
 def load_data():
 
-	if False:
-		# get online versions
-		data = requests.get('https://github.com/co2birthdate/dataops/raw/master/output_data/co2.json').json()
-		latest = requests.get('https://github.com/co2birthdate/dataops/raw/master/output_data/latest.json').json()
+	if True:
+		# get online versions (use this old commit, since the current input data is borked)
+		data = requets.get('https://raw.githubusercontent.com/co2birthdate/dataops/37e471357b893d6a3a55a50a58a297365a437434/output_data/co2.json').json()
+		latest = requests.get('https://raw.githubusercontent.com/co2birthdate/dataops/37e471357b893d6a3a55a50a58a297365a437434/output_data/latest.json').json()
+		#data = requests.get('https://github.com/co2birthdate/dataops/raw/master/output_data/co2.json').json()
+		#latest = requests.get('https://github.com/co2birthdate/dataops/raw/master/output_data/latest.json').json()
 	else:
 		# use local in git submodule (or for debugging)
 		with open('dataops/output_data/co2.json','r') as d:
