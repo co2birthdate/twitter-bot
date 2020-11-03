@@ -2,7 +2,7 @@ name: Run twitter-reply-bot
 
 on:
   schedule:
-   - cron: "0 */1 * * *"
+   - cron: "20/60 * * * *"
 #  push:
 #    branches: [ master ]
 
