@@ -50,8 +50,10 @@ def main(text, data, latest):
 		reply.append('Here are your atmospheric CO₂ measurements:')
 
 		for d in dates_list:
-			#print(d)
+			print(d)
 			previous = next((item for item in data if item['date'] == d), None)
+			if previous is None:
+				continue
 			previous_value = previous.get('ppm')
 
 			percent_change = round(100.0 * (current_value - previous_value) / previous_value,1)
