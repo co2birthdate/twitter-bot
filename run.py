@@ -45,12 +45,14 @@ def check_mentions(api, since_id):
 		#if not tweet.user.following:
 		#	tweet.user.follow()
 
-		reply = '@'+tweet.user.screen_name + ' ' + get_dates.main(tweet.text, data, latest)
+		#reply = '@'+tweet.user.screen_name + ' ' + get_dates.main(tweet.text, data, latest)
+		reply = get_dates.main(tweet.text, data, latest)
+
 
 		print('LOGGING: '+str(tweet.id))
 
 		try:
-			api.update_status(status=reply,in_reply_to_status_id=tweet.id,)
+			api.update_status(status=reply, in_reply_to_status_id=tweet.id, auto_populate_reply_metadata=True)
 		except:
 			pass # avoid duplicate replies
 
